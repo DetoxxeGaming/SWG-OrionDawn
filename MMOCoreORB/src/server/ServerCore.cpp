@@ -83,9 +83,6 @@ void ServerCore::initialize() {
 
 	processConfig();
 
-	Logger::setGlobalFileLogger(configManager->getLogFile());
-	Logger::setGlobalFileLogLevel(static_cast<Logger::LogLevel>(configManager->getLogFileLevel()));
-
 	try {
 		ObjectManager* objectManager = ObjectManager::instance();
 
@@ -100,13 +97,8 @@ void ServerCore::initialize() {
 
 		orb->setCustomObjectManager(objectManager);
 
-		StringBuffer metricsMsg;
-		metricsMsg << "METRICS: " << String::valueOf(configManager->shouldUseMetrics()) << " " << configManager->getMetricsHost() << " " << String::valueOf(configManager->getMetricsPort()) << endl;
-
-		info(metricsMsg, true);
-
+		System::out << "METRICS: " << String::valueOf(configManager->shouldUseMetrics()) << " " << configManager->getMetricsHost() << " " << String::valueOf(configManager->getMetricsPort()) << endl;
 		if (configManager->shouldUseMetrics()) {
-			metricsManager->setGlobalPrefix(configManager->getMetricsPrefix());
 			metricsManager->initializeStatsDConnection(
 					configManager->getMetricsHost().toCharArray(),
 					configManager->getMetricsPort());
@@ -141,8 +133,7 @@ void ServerCore::initialize() {
 		NavMeshManager::instance()->initialize(configManager->getMaxNavMeshJobs(), zoneServer);
 
 		if (zoneServer != NULL) {
-			int zonePort = configManager->getZoneServerPort();
-
+			int zonePort = 44463;
 			int zoneAllowedConnections =
 					configManager->getZoneAllowedConnections();
 
@@ -157,8 +148,7 @@ void ServerCore::initialize() {
 			int galaxyID = configManager->getZoneGalaxyID();
 
 			try {
-				if (zonePort == 0) {
-					String query = "SELECT port FROM galaxy WHERE galaxy_id = "
+				String query = "SELECT port FROM galaxy WHERE galaxy_id = "
 								   + String::valueOf(galaxyID);
 					Reference < ResultSet * > result =
 							database->instance()->executeQuery(query);
@@ -166,7 +156,6 @@ void ServerCore::initialize() {
 					if (result != NULL && result->next()) {
 						zonePort = result->getInt(0);
 					}
-				}
 
 				database->instance()->executeStatement(
 						"TRUNCATE TABLE sessions");
@@ -219,7 +208,7 @@ void ServerCore::initialize() {
 #endif
 
 		info("initialized", true);
-		
+
 		if (arguments.contains("playercleanup") && zoneServer != NULL) {
 			zoneServer->getPlayerManager()->cleanupCharacters();
 		}
@@ -231,7 +220,7 @@ void ServerCore::initialize() {
 		if (arguments.contains("shutdown")) {
 			handleCmds = false;
 		}
-		
+
 	} catch (ServiceException& e) {
 		shutdown();
 	} catch (DatabaseException& e) {
@@ -489,19 +478,6 @@ void ServerCore::handleCommands() {
 					System::out << "result: " << file << endl;
 				}
 
-			} else if (command == "loglevel") {
-				int level = 0;
-				try {
-					level = Integer::valueOf(arguments);
-				} catch (Exception& e) {
-					System::out << "invalid log level" << endl;
-				}
-
-				if (level >= Logger::NONE && level <= Logger::DEBUG) {
-					Logger::setGlobalFileLogLevel(static_cast<Logger::LogLevel>(level));
-
-					System::out << "log level changed to: " << level << endl;
-				}
 			} else if (command == "rev") {
 				System::out << ConfigManager::instance()->getRevision() << endl;
 			} else if (command == "broadcast") {
