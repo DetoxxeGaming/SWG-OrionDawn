@@ -303,7 +303,7 @@ float CollisionManager::getWorldFloorCollision(float x, float y, float z, Zone* 
 			app->intersects(rayModelSpace, 16384 * 2, results);
 
 			if (results.size()) { // results are ordered based on intersection distance from min to max
-				float floorHeight = 16384.f - results.getUnsafe(0).getIntersectionDistance();
+				float floorHeight = ray.getOrigin().getY() - results.getUnsafe(0).getIntersectionDistance();
 
 				if (floorHeight > height)
 					height = floorHeight;
@@ -372,7 +372,7 @@ float CollisionManager::getWorldFloorCollision(float x, float y, Zone* zone, boo
 void CollisionManager::getWorldFloorCollisions(float x, float y, Zone* zone, SortedVector<IntersectionResult>* result, CloseObjectsVector* closeObjectsVector) {
 	if (closeObjectsVector != NULL) {
 		Vector<QuadTreeEntry*> closeObjects(closeObjectsVector->size(), 10);
-		closeObjectsVector->safeCopyTo(closeObjects);
+		closeObjectsVector->safeCopyReceiversTo(closeObjects, CloseObjectsVector::COLLIDABLETYPE);
 
 		getWorldFloorCollisions(x, y, zone, result, closeObjects);
 	} else {
@@ -469,7 +469,7 @@ bool CollisionManager::checkLineOfSight(SceneObject* object1, SceneObject* objec
 		closeObjectsNonReference = new SortedVector<QuadTreeEntry* >();
 
 		CloseObjectsVector* vec = (CloseObjectsVector*) object1->getCloseObjects();
-		vec->safeCopyTo(*closeObjectsNonReference.get());
+		vec->safeCopyReceiversTo(*closeObjectsNonReference.get(), CloseObjectsVector::COLLIDABLETYPE);
 	}
 
 	if (object1->isCreatureObject())

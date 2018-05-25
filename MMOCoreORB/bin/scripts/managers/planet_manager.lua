@@ -55,7 +55,7 @@ starportLandedTime = 120
 
 corellia = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = { },
 
@@ -102,7 +102,7 @@ corellia = {
 
 dantooine = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = {
 		{name = "@dantooine_region_names:dantooine_mining_outpost", x = -640, y = 2486},
@@ -142,7 +142,7 @@ dantooine = {
 
 dathomir = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = { },
 
@@ -245,7 +245,7 @@ endor = {
 
 lok = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = {
 		{name = "@lok_region_names:lok_imperial_outpost", x = -1920, y = -3084},
@@ -283,7 +283,7 @@ lok = {
 
 naboo = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = { },
 
@@ -343,7 +343,7 @@ naboo = {
 
 rori = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = {
 		{name = "@rori_region_names:sdungeon_rebel_outpost", x = 3677, y = -6447},
@@ -422,7 +422,7 @@ rori = {
 
 talus = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = {
 		{name = "@talus_region_names:talus_imperial_outpost", x = -2178, y = 2300},
@@ -506,7 +506,7 @@ talus = {
 
 tatooine = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = { },
 
@@ -571,7 +571,7 @@ tatooine = {
 
 yavin4 = {
 	weatherEnabled = 1,
-	gcwEnabled = 1,
+	gcwEnabled = 0,
 
 	outpostRegionNames = {
 		{name = "@yavin4_region_names:yavin4_mining_outpost", x = -312, y = 4865},
@@ -707,6 +707,41 @@ tutorial = {
 }
 
 dungeon1 = {
+	weatherEnabled = 0,
+	gcwEnabled = 0,
+}
+
+mustafar = {
+	weatherEnabled = 0,
+	gcwEnabled = 0,
+}
+
+kashyyyk_main = {
+
+	weatherEnabled = 1,
+	gcwEnabled = 0,
+
+	planetTravelPoints = {
+		{name = "Kachirho Starport", x = -690.3, z = 20.4, y = -168, interplanetaryTravelAllowed = 1, incomingTravelAllowed = 1},
+
+	},
+
+	badgeAreas = {
+		--{"badge_kachirho",-690,-168,10,xx},
+
+	},
+
+	navAreas = {
+		{"kachirho_starport",-678,-160,63},
+		{"kachirho",-513,-81,125},
+	},
+
+	planetObjects = {
+		--{templateFile = "object/tangible/terminal/terminal_character_builder.iff", ox = 0, oy = -0.705623, oz = 0, ow = 0.708587, x = -6917.18, z = 73, y = -5732.25, parentid = 0}
+	}
+}
+
+kashyyyk_hunting = {
 	weatherEnabled = 0,
 	gcwEnabled = 0,
 }

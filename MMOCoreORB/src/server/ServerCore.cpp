@@ -84,6 +84,7 @@ void ServerCore::initialize() {
 	processConfig();
 
 	Logger::setGlobalFileLogger(configManager->getLogFile());
+	Logger::setGlobalFileLoggerSync(configManager->getSyncLogOutput());
 	Logger::setGlobalFileLogLevel(static_cast<Logger::LogLevel>(configManager->getLogFileLevel()));
 
 	try {
@@ -219,7 +220,7 @@ void ServerCore::initialize() {
 #endif
 
 		info("initialized", true);
-		
+
 		if (arguments.contains("playercleanup") && zoneServer != NULL) {
 			zoneServer->getPlayerManager()->cleanupCharacters();
 		}
@@ -231,7 +232,7 @@ void ServerCore::initialize() {
 		if (arguments.contains("shutdown")) {
 			handleCmds = false;
 		}
-		
+
 	} catch (ServiceException& e) {
 		shutdown();
 	} catch (DatabaseException& e) {

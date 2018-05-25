@@ -27,7 +27,7 @@ void destroyNavMeshQuery(void* value) {
 
 PathFinderManager::PathFinderManager() : Logger("PathFinderManager"), m_navQuery(destroyNavMeshQuery) {
 	setFileLogger("log/pathfinder.log");
-
+	
 	m_filter.setIncludeFlags(SAMPLE_POLYFLAGS_ALL ^ (SAMPLE_POLYFLAGS_DISABLED));
 	m_filter.setExcludeFlags(0);
 	m_filter.setAreaCost(SAMPLE_POLYAREA_GROUND, 1.0f);
@@ -750,7 +750,7 @@ Vector<WorldCoordinates>* PathFinderManager::findPathFromCellToWorld(const World
 
 	delete exitPath;
 	exitPath = NULL;
-	
+
 	if (path->size()) {
 		Vector<WorldCoordinates>* newPath = findPathFromWorldToWorld(path->get(path->size()-1), pointB, zone);
 		if (newPath) {

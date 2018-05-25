@@ -22,7 +22,7 @@ bin/*.log
 bin/*.xml
 bin/*sh
 bin/*out
-*test*
+#*test*
 *.sh
 build_temp
 *_includes
@@ -40,6 +40,7 @@ src/server/web/Makefile
 src/server/zone/Makefile
 tags
 utils/gtest-1.6.0/*
+#utils/googletest-release-1.8.0/*
 ../*
 bin/conf/*
 .*.swp
